@@ -83,10 +83,42 @@ class Field {
 }
 
 // Initialize the game field
-const myField = new Field([
-    [fieldCharacter, fieldCharacter, hole],
-    [fieldCharacter, hole, fieldCharacter],
-    [fieldCharacter, hat, fieldCharacter],
-]);
+// The field is a 2D array of characters
+function getField(difficulty) {
+    if (difficulty === 'easy') {
+        return [
+            [fieldCharacter, fieldCharacter, hole],
+            [fieldCharacter, hole, fieldCharacter],
+            [fieldCharacter, hat, fieldCharacter],
+        ];
+    } else if (difficulty === 'medium') {
+        return [
+            [fieldCharacter, hole, hole],
+            [fieldCharacter, fieldCharacter, hole],
+            [fieldCharacter, hat, fieldCharacter],
+        ];
+    } else if (difficulty === 'hard') {
+        return [
+            [hole, fieldCharacter, hole, fieldCharacter],
+            [fieldCharacter, fieldCharacter, hole, fieldCharacter],
+            [fieldCharacter, hole, fieldCharacter, fieldCharacter],
+            [fieldCharacter, hat, hole, fieldCharacter],
+        ];
+    } else if (difficulty === 'extra hard') {
+        return [
+            [hole, fieldCharacter, hole, fieldCharacter, hole],
+            [fieldCharacter, hole, fieldCharacter, hole, fieldCharacter],
+            [hole, fieldCharacter, fieldCharacter, fieldCharacter, hole],
+            [fieldCharacter, hole, fieldCharacter, hole, fieldCharacter],
+            [fieldCharacter, hat, fieldCharacter, fieldCharacter, hole],
+        ];
+    } else {
+        console.log('Invalid difficulty level! Defaulting to easy.');
+        return getField('easy'); // Default to easy if invalid
+    }
+}
 
+// Get user input for difficulty level
+const difficulty = prompt('Choose difficulty level (easy/medium/hard/extra hard): ').toLowerCase();
+const myField = new Field(getField(difficulty));
 myField.playGame(); // Start the game
